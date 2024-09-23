@@ -1,0 +1,110 @@
+-- Insert data into Car_Type table
+INSERT INTO Car_Type (Year, BodyType, Model_Name, VIN)
+VALUES
+  (2016, 'Sedan', 'Civic', '2HGFE1F94RH306510'),
+  (2011, 'Sedan', 'Accord', '1HGCS1A31BA010797'),
+  (2015, 'Truck', 'F-150', '1FTEW1EF6FFA50222'),
+  (2024, 'Sedan', 'A8 L', 'WAULDAF8XRN000332'),
+  (2024, 'SUV', 'X5', '5UX23EU03R9S89602'),
+  (2024, 'SUV', 'Pilot', '5FNYG1H6XRB011888'),
+  (2024, 'SUV', 'GLE350', '4JGFB4FB6RB096301'),
+  (2024, 'Van', 'Carnival', 'KNDNC5H31R6381506'),
+  (2024, 'Sedan', 'Accord', '1HGCY1F39RA011441'),
+  (2024, 'Sedan', 'Camry', '4T1KZ1AK7RU094870'),
+  (2023, 'Truck', 'F-150 King Ranch', '1FTFW1ED7PFC58727')
+ON DUPLICATE KEY UPDATE
+  Year = VALUES(Year), BodyType = VALUES(BodyType), Model_Name = VALUES(Model_Name);
+
+
+-- Insert data into Car_Brand table first
+INSERT INTO Car_Brand (BrandName, HQ_Location, Start_Year)
+VALUES ('Honda', 'Japan', 1948),
+       ('Ford', 'USA', 1903),
+       ('Audi', 'Germany', 1909),
+       ('BMW', 'Germany', 1916),
+       ('Mercedes-Benz', 'Germany', 1926),
+       ('Toyota', 'Japan', 1937),
+       ('Volkswagen', 'Germany', 1937),
+       ('Chevrolet', 'USA', 1911),
+       ('Porsche', 'Germany', 1931),
+       ('Lexus', 'Japan', 1989),
+       ('KIA', 'South Korea', NULL)  -- Add a placeholder for 'KIA'
+        ON DUPLICATE KEY UPDATE HQ_Location = VALUES(HQ_Location), Start_Year = VALUES(Start_Year);
+
+-- Insert data into Car_Options table
+INSERT INTO Car_Options (Engine, Color, Option_VIN)
+VALUES ('I6', 'White', '5UX23EU03R9S89602'),
+       ('V8', 'White', '1FTEW1EF6FFA50222'),
+       ('I4', 'Blue', '2HGFE1F94RH306510'),
+       ('I4', 'Gray', '1HGCS1A31BA010797'),
+       ('V6', 'Black', 'WAULDAF8XRN000332'),
+       ('V6', 'Black', '5FNYG1H6XRB011888'),
+       ('I4', 'Black', '4JGFB4FB6RB096301'),
+       ('V6', 'Gray', 'KNDNC5H31R6381506'),
+       ('I4', 'Gray', '1HGCY1F39RA011441'),
+       ('V6', 'White', '4T1KZ1AK7RU094870'),
+       ('V6', 'White', '1FTFW1ED7PFC58727')
+       ON DUPLICATE KEY UPDATE Engine = VALUES(Engine), Color = VALUES(Color);
+
+       ;
+
+-- Insert data into Manufacturer table
+INSERT INTO Manufacturer (Manufacturer_ID, MSRP, Car_VIN, Location)
+VALUES (123456, 32100, '2HGFE1F94RH306510', 'Indiana'),
+       (123457, 10800, '1HGCS1A31BA010797', 'Indiana'),
+       (123458, 15000, '1FTEW1EF6FFA50222', 'Missouri'),
+       (123459, 100495, 'WAULDAF8XRN000332', 'Germany'),
+       (123460, 65200, '5UX23EU03R9S89602', 'South Carolina'),
+       (123461, 53125, '5FNYG1H6XRB011888', 'Alabama'),
+       (123462, 57700, '4JGFB4FB6RB096301', 'Alabama'),
+       (123463, 40910, 'KNDNC5H31R6381506', 'South Korea'),
+       (123464, 31005, '1HGCY1F39RA011441', 'Indiana'),
+       (123465, 41184, '4T1KZ1AK7RU094870', 'Kentucky'),
+       (123466, 79905, '1FTFW1ED7PFC58727', 'Missouri')
+ON DUPLICATE KEY UPDATE MSRP = VALUES(MSRP), Location = VALUES(Location);
+
+-- Now you can insert into Car_Can_Have
+INSERT INTO Car_Can_Have (BrandName, VIN)
+VALUES ('Honda', '2HGFE1F94RH306510'),
+       ('Honda', '1HGCS1A31BA010797'),
+       ('Ford', '1FTEW1EF6FFA50222'),
+       ('Honda','5FNYG1H6XRB011888'),
+       ('Audi', 'WAULDAF8XRN000332'),
+       ('BMW', '5UX23EU03R9S89602'),
+       ('Mercedes-Benz', '4JGFB4FB6RB096301'),
+       ('KIA', 'KNDNC5H31R6381506'),
+       ('Honda', '1HGCY1F39RA011441'),
+       ('Toyota', '4T1KZ1AK7RU094870'),
+       ('Ford', '1FTFW1ED7PFC58727')
+ON DUPLICATE KEY UPDATE BrandName = VALUES(BrandName);
+
+-- Insert data into Car_Dealership table
+INSERT INTO Car_Dealership (DealerID, MSRP, Sell_price, Manufacturer_ID)
+VALUES (101, 32100, 30350, 123456),
+       (101, 10800, 9900, 123457),
+       (102, 53125, 53125, 123461),
+       (103, 16448, 15000, 123458),
+       (104, 100495, 100495, 123459),
+       (105, 65200, 72020, 123460),
+       (106, 57700, 76825, 123462),
+       (107, 40910, 40910, 123463),
+       (108, 31005, 29990, 123464),
+       (109, 41184, 40631, 123465),
+       (110, 79905, 71648, 123466)
+ON DUPLICATE KEY UPDATE MSRP = VALUES(MSRP), Sell_price = VALUES(Sell_price);
+
+-- Insert data into Car_Inventory table
+INSERT INTO Car_Inventory (Inventory_ID, Manufacturer_ID, VIN, Car_Color, Cost)
+VALUES 
+  (201, 123456, '2HGFE1F94RH306510', 'Gray', 30350),
+  (202, 123457, '1HGCS1A31BA010797', 'Gray', 9900),
+  (203, 123458, '1FTEW1EF6FFA50222', 'White', 16448),
+  (204, 123459, 'WAULDAF8XRN000332', 'Black', 100495),
+  (205, 123460, '5UX23EU03R9S89602', 'White', 72020),
+  (206, 123461, '5FNYG1H6XRB011888', 'Black', 53125),
+  (207, 123462, '4JGFB4FB6RB096301', 'Black', 76825),
+  (208, 123463, 'KNDNC5H31R6381506', 'Gray', 40910),
+  (209, 123464, '1HGCY1F39RA011441', 'Gray', 29990),
+  (210, 123465, '4T1KZ1AK7RU094870', 'White', 40631),
+  (211, 123466, '1FTFW1ED7PFC58727', 'White', 71648)
+ON DUPLICATE KEY UPDATE VIN = VALUES(VIN), Car_Color = VALUES(Car_Color), Cost = VALUES(Cost);

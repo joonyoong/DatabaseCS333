@@ -1,0 +1,83 @@
+CREATE TABLE Car_Type
+(
+  Year INT NOT NULL,
+  BodyType VARCHAR(50) NOT NULL,
+  Model_Name VARCHAR(50) NOT NULL,
+  VIN VARCHAR(50) NOT NULL,
+  PRIMARY KEY (VIN)
+);
+
+CREATE TABLE Car_Brand
+(
+  BrandName VARCHAR(50) NOT NULL,
+  HQ_Location VARCHAR(50) NOT NULL,
+  Start_Year INT NOT NULL,
+  PRIMARY KEY (BrandName)
+);
+
+CREATE TABLE Car_Options
+(
+  Engine VARCHAR(10) NOT NULL,
+  Color VARCHAR(50) NOT NULL,
+  Option_VIN VARCHAR(50) NOT NULL,
+  PRIMARY KEY (Option_VIN),
+  FOREIGN KEY (Option_VIN) REFERENCES Car_Type(VIN)
+);
+
+CREATE TABLE Manufacturer
+(
+  Manufacturer_ID INT NOT NULL,
+  MSRP INT NOT NULL,
+  Car_VIN VARCHAR(50) NOT NULL,
+  Location VARCHAR(50) NOT NULL,
+  PRIMARY KEY (Manufacturer_ID) 
+);
+
+CREATE TABLE Car_Inventory
+(
+  Inventory_ID INT NOT NULL,
+  Manufacturer_ID INT NOT NULL,
+  Car_Color VARCHAR(50) NOT NULL,
+  Cost INT NOT NULL,
+  PRIMARY KEY (Inventory_ID),
+  FOREIGN KEY (Manufacturer_ID) REFERENCES Manufacturer(Manufacturer_ID)
+);
+
+CREATE TABLE Car_Dealership
+(
+  DealerID INT NOT NULL,
+  MSRP INT NOT NULL,
+  Sell_price INT NOT NULL,
+  Manufacturer_ID INT NOT NULL,
+  PRIMARY KEY (DealerID),
+  FOREIGN KEY (Manufacturer_ID) REFERENCES Manufacturer(Manufacturer_ID)
+);
+
+CREATE TABLE Car_Employee
+(
+  EmployeeID INT NOT NULL,
+  Position VARCHAR(50) NOT NULL,
+  Salary INT NOT NULL,
+  Employee_BrandName VARCHAR(50) NOT NULL,
+  PRIMARY KEY (EmployeeID),
+  FOREIGN KEY (Employee_BrandName) REFERENCES Car_Brand(BrandName)
+);
+
+CREATE TABLE Car_Makes
+(
+  Manufacturer_ID INT NOT NULL,
+  BrandName VARCHAR(50) NOT NULL,
+  PRIMARY KEY (Manufacturer_ID, BrandName),
+  FOREIGN KEY (Manufacturer_ID) REFERENCES Manufacturer(Manufacturer_ID),
+  FOREIGN KEY (BrandName) REFERENCES Car_Brand(BrandName)
+);
+
+CREATE TABLE Car_Can_Have
+(
+  BrandName VARCHAR(50) NOT NULL,
+  VIN VARCHAR(50) NOT NULL,
+  PRIMARY KEY (VIN),
+  FOREIGN KEY (BrandName) REFERENCES Car_Brand(BrandName),
+  FOREIGN KEY (VIN) REFERENCES Car_Type(VIN)
+);
+

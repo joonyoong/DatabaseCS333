@@ -1,0 +1,5 @@
+In the US Cars are crucial to our everyday life. Everybody buys or at least sells a Car
+somepoint in their lives. The Car market is being constantly updated especially many cars being 
+created yearly. So, I decided to create a database on Cars since there are so many cars with unique 
+identifier called the VIN. This database system should ease the update on future cars and constantly 
+update the price depreciation of cars.
